@@ -28,8 +28,6 @@ steps:
   displayName: 'Restoring "Cake.Tool" .NET local tool'
 
 - bash: |
-    export PATH="$PATH:$HOME/.dotnet/tools"
-    export PATH="$HOME/.dotnet:$PATH"
     dotnet build
   displayName: 'Build'
 
@@ -37,3 +35,4 @@ steps:
     curl https://api.endorlabs.com/download/endorlabs/v1.5.251/binaries/endorctl_v1.5.251_linux_amd64 -o endorctl  
     chmod +x ./endorctl
     ./endorctl scan --api-key $(ENDOR_API_CREDENTIALS_KEY) --api-secret $(ENDOR_API_CREDENTIALS_SECRET) --as-default-branch=true --detached-ref-name=master -n nate-learn
+  displayName: 'Endor Scan'
