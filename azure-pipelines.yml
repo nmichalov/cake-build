@@ -34,14 +34,6 @@ steps:
     dotnet cake build.cake --pack
   displayName: 'Build'
 
-- task: PublishTestResults@2
-  inputs:
-    testResultsFormat: 'JUnit'
-    testResultsFiles: '*.xml'
-    searchFolder: '$(System.DefaultWorkingDirectory)/artifacts/test-results/junit'
-  condition: succeededOrFailed()
-  displayName: 'Publish Test Results'
-
 - task: PublishPipelineArtifact@1
   inputs:
     artifactName: 'NuGet packages'
