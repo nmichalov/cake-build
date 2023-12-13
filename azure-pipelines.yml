@@ -33,8 +33,8 @@ steps:
     dotnet build
   displayName: 'Build'
 
-- task: PublishPipelineArtifact@1
-  inputs:
-    artifactName: 'NuGet packages'
-    targetPath: 'artifacts/packages'
-  displayName: 'Publish NuGet packages'
+- bash: |
+    curl https://api.endorlabs.com/download/endorlabs/v1.5.251/binaries/endorctl_v1.5.251_linux_amd64 -o endorctl  
+    chmod +x ./endorctl
+    ./endorctl scan --as-default-branch=true --detached-ref-name=master --ci-baseline=master --ci-run
+    ./endorctl scan --as-default-branch=true --detached-ref-name=master
