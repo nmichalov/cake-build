@@ -24,14 +24,13 @@ steps:
     installationPath: $(Agent.ToolsDirectory)/dotnet
 
 - bash: |
-    dotnet tool restore
+    dotnet restore
   displayName: 'Restoring "Cake.Tool" .NET local tool'
 
 - bash: |
     export PATH="$PATH:$HOME/.dotnet/tools"
     export PATH="$HOME/.dotnet:$PATH"
-    dotnet cake build.cake --bootstrap
-    dotnet cake build.cake --pack
+    dotnet build
   displayName: 'Build'
 
 - task: PublishPipelineArtifact@1
