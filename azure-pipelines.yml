@@ -39,7 +39,7 @@ steps:
   displayName: 'Build'
 
 - bash: |
-    curl https://api.endorlabs.com/download/endorlabs/latest/binaries/endorctl_linux_amd64 -o endorctl  
+    curl https://api.endorlabs.com/download/latest/endorctl_linux_amd64 -o endorctl  
     chmod +x ./endorctl
     ./endorctl scan --api-key $(ENDOR_API_CREDENTIALS_KEY) --api-secret $(ENDOR_API_CREDENTIALS_SECRET) --as-default-branch=true --detached-ref-name=master -n nate-learn --exclude="(./src/ExtraLogic.*)|(.*HelloTests.*)"
   displayName: 'Endor Scan'
