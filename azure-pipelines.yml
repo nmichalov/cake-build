@@ -45,5 +45,5 @@ steps:
     echo "$(curl -s https://api.endorlabs.com/sha/latest/endorctl_linux_amd64)  endorctl" | sha256sum -c
     ## Modify the permissions of the binary to ensure it is executable
     chmod +x ./endorctl
-    ./endorctl scan --api-key $(ENDOR_API_CREDENTIALS_KEY) --api-secret $(ENDOR_API_CREDENTIALS_SECRET) --as-default-branch=true --detached-ref-name=master -n nate-learn --exclude="(./src/ExtraLogic.*)|(.*HelloTests.*)"
+    ./endorctl scan --api-key $(ENDOR_API_CREDENTIALS_KEY) --api-secret $(ENDOR_API_CREDENTIALS_SECRET) --as-default-branch=true --detached-ref-name=test-branch -n nate-learn --exclude="(./src/ExtraLogic.*)|(.*HelloTests.*)"
   displayName: 'Endor Scan'
