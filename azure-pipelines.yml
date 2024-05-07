@@ -39,16 +39,11 @@ steps:
   displayName: 'Build'
 
 - bash: |
-    curl https://api.endorlabs.com/download/latest/endorctl_linux_amd64 -o endorctl  
+    ## Download the latest CLI for Linux amd64
+    curl https://api.endorlabs.com/download/latest/endorctl_linux_amd64 -o endorctl
+    ## Verify the checksum of the binary
+    echo "$(curl -s https://api.endorlabs.com/sha/latest/endorctl_linux_amd64)  endorctl" | sha256sum -c
+    ## Modify the permissions of the binary to ensure it is executable
     chmod +x ./endorctl
-    # Function to calculate the date 15 days from today calculate_expiration_date() { date -u -d "$(date -u '+%Y-%m-%dT%H:%M:%S.%NZ') +15 days" '+%Y-%m-%dT%H:%M:%S.%NZ'}
-    # API call
-    response=$(endorctl api create -r APIKey -n nate-learn -d '{"meta":{"name":"test_key_ctl_2"}, "spec":{"expiration_time":"'$(calculate_expiration_date)'", "permissions":{ "roles":["SYSTEM_ROLE_ADMIN"]}}}')
-    # Parse response and assign values to environment variables
-    ENDOR_API_CREDENTIALS_SECRET=$(echo "$response" | jq -r '.spec.secret')
-    ENDOR_API_CREDENTIALS_KEY=$(echo "$response" | jq -r '.spec.key')
-    # Export environment variables if needed in the calling shell
-    export ENDOR_API_CREDENTIALS_SECRET
-    export ENDOR_API_CREDENTIALS_KEY
     ./endorctl scan --api-key $(ENDOR_API_CREDENTIALS_KEY) --api-secret $(ENDOR_API_CREDENTIALS_SECRET) --as-default-branch=true --detached-ref-name=master -n nate-learn --exclude="(./src/ExtraLogic.*)|(.*HelloTests.*)"
   displayName: 'Endor Scan'
