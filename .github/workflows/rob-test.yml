@@ -1,0 +1,41 @@
+name: Endor Labs Dependency and Secrets Scan
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+jobs:
+  scan:
+    permissions:
+      security-events: write # Used to upload Sarif artifact to GitHub
+      contents: read # Used to check out a private repository
+      actions: read # Required for private repositories to upload Sarif files. GitHub Advanced Security licenses are required.
+      id-token: write # Used for keyless authentication with Endor Labs
+      pull-requests: write # Required to automatically comment on PRs for new policy violations
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: 🔧 Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 8.0.x
+      env:
+        DOTNET_INSTALL_DIR: "~/.dotnet"
+
+    - name: Build Package
+      run: dotnet build
+
+    - name: Endor Labs Scan Pull Request
+      if: github.event_name == 'pull_request'
+      uses: endorlabs/github-action@v1.1.4
+      with:
+        namespace: 'roblox'
+        scan_dependencies: true
+        scan_secrets: false
+        pr: true
+        enable_pr_comments: true # Required to automatically comment on PRs for new policy violations
+        github_token: ${{ secrets.GITHUB_TOKEN }} # Required for PR comments on new policy violations
