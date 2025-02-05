@@ -31,7 +31,7 @@ jobs:
 
     - name: Endor Labs Scan Pull Request
       if: github.event_name == 'pull_request'
-      uses: endorlabs/github-action@v1.1.4
+      uses: endorlabs/github-action@v1.1.7
       with:
         namespace: 'nate-learn'
         scan_dependencies: true
