@@ -33,7 +33,7 @@ jobs:
       if: github.event_name == 'pull_request'
       uses: endorlabs/github-action@v1.1.4
       with:
-        namespace: 'roblox'
+        namespace: 'nate-learn'
         scan_dependencies: true
         scan_secrets: false
         pr: true
